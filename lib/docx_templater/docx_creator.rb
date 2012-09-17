@@ -7,9 +7,10 @@ module DocxTemplater
       @template_processor = TemplateProcessor.new(data, escape_html)
     end
 
-    def generate_docx_file(file_name = "output_#{Time.now.strftime("%Y-%m-%d_%H%M")}.docx")
+    def generate_docx_file(file_name = "output_#{Time.now.strftime("%Y-%m-%d_%H%M")}.docx", encoding = nil)
       buffer = generate_docx_bytes
-      File.open(file_name, 'w') { |f| f.write(buffer) }
+      mode = encoding ? "w:#{encoding}" : "w"
+      File.open(file_name, mode) { |f| f.write(buffer) }
     end
 
     def generate_docx_bytes
